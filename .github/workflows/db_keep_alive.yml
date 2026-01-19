@@ -1,9 +1,9 @@
 name: Database Keep-Alive
 
 on:
-  # 1. 定时触发：每天 UTC 0点 (北京时间早上8点)
+  # 1. 定时触发：每天 UTC 0点 (北京时间早下午17:30)
   schedule:
-    - cron: '23 17 * * *'
+    - cron: '30 9 * * *'
   
   # 2. 手动触发：可以开关特定服务
   workflow_dispatch:
