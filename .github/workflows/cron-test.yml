@@ -1,0 +1,14 @@
+name: Cron Test Workflow
+
+# 触发条件：每5分钟执行 + 支持手动触发
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # UTC时区，每5分钟触发一次
+  workflow_dispatch:       # 保留手动触发能力
+
+jobs:
+  test-cron-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Cron Run Info
+        run: echo "Cron job triggered successfully at $(date -u)"  # 输出UTC时间，便于核对
