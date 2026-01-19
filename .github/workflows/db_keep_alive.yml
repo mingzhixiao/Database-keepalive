@@ -1,0 +1,95 @@
+name: Database Keep-Alive
+
+on:
+  # 1. 定时触发：每天 UTC 0点 (北京时间早上8点)
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # 2. 手动触发：可以开关特定服务
+  workflow_dispatch:
+    inputs:
+      enable_mongo:
+        description: 'Run MongoDB Check'
+        required: true
+        default: true
+        type: boolean
+      enable_redis:
+        description: 'Run Redis Check'
+        required: true
+        default: true
+        type: boolean
+      enable_postgres:
+        description: 'Run PostgreSQL Check'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  # --- MongoDB Job ---
+  keep-mongo:
+    runs-on: ubuntu-latest
+    # 逻辑：如果是定时任务 OR (手动触发 AND 开启了Mongo)
+    if: ${{ github.event_name == 'schedule' || inputs.enable_mongo == true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Mongo Task
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: python main.py --service mongo
+
+  # --- Redis Job ---
+  keep-redis:
+    runs-on: ubuntu-latest
+    # 互不关联，并行运行
+    needs: [] 
+    if: ${{ github.event_name == 'schedule' || inputs.enable_redis == true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Redis Task
+        env:
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+        run: python main.py --service redis
+
+  # --- PostgreSQL Job ---
+  keep-postgres:
+    runs-on: ubuntu-latest
+    needs: []
+    if: ${{ github.event_name == 'schedule' || inputs.enable_postgres == true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Postgres Task
+        env:
+          PG_DSN: ${{ secrets.PG_DSN }}
+        run: python main.py --service postgres
