@@ -5,7 +5,8 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-  pull_request: 
+  pull_request:
+  
   
   # 2. 手动触发：可以开关特定服务
   workflow_dispatch:
