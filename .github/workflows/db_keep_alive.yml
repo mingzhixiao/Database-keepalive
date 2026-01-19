@@ -70,6 +70,7 @@ jobs:
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
         run: python main.py --service redis
 
   # --- PostgreSQL Job ---
