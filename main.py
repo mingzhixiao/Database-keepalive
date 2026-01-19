@@ -52,6 +52,7 @@ def run_redis():
     host = os.environ.get("REDIS_HOST")
     port = os.environ.get("REDIS_PORT", 6379)
     password = os.environ.get("REDIS_PASSWORD")
+    username = os.environ.get("REDIS_USERNAME") # 新增：获取用户名
     
     if not host:
         print("Error: REDIS_HOST is not set.")
@@ -59,7 +60,7 @@ def run_redis():
 
     print("--- Starting Redis Keep-Alive ---")
     try:
-        r = redis.Redis(host=host, port=port, password=password, decode_responses=True, socket_timeout=5)
+        r = redis.Redis(host=host, port=port,username=username, password=password, decode_responses=True, socket_timeout=5)
         
         ttl_seconds = 86400 # 1天
 
