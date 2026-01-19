@@ -3,7 +3,7 @@ name: Database Keep-Alive
 on:
   # 1. 定时触发：每天 UTC 0点 (北京时间早下午17:30)
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '*/1 0 * * *'
   push:
   pull_request:
   
