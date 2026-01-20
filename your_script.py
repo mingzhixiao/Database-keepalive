@@ -17,7 +17,7 @@ def run_auto_login_and_jump():
         # 抛出异常，让 GitHub Action 报错，而不是报参数缺失
         raise ValueError("Credentials missing in environment variables")
 
-    print(f">>> 正在尝试登录用户: {username}")
+    print(f">>> 正在尝试登录用户: {USERNAME}")
     
     # 4. 元素定位
     SELECTOR_USER = "input[id='username']"
