@@ -10,7 +10,9 @@ def run_auto_login_and_jump():
     
     # 3. 账号信息
     USERNAME = os.environ.get("MY_USERNAME")
+    print("USERNAME"+USERNAME)
     PASSWORD = os.environ.get("MY_PASSWORD")
+    print("PASSWORD"+PASSWORD)
     
     # 4. 元素定位
     SELECTOR_USER = "input[id='username']"
