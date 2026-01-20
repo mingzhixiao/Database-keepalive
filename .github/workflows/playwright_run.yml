@@ -25,14 +25,14 @@ jobs:
         pip install -r requirements2.txt
 
     - name: 安装 Playwright 浏览器及其依赖
-      env:
-        MY_USERNAME: ${{ secrets.MY_USERNAME }}
-        MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
       run: |
         # 这一步非常关键，安装 Chromium 浏览器和系统级库
         playwright install chromium --with-deps
 
     - name: 执行登录截图脚本
+      env:
+        MY_USERNAME: ${{ secrets.MY_USERNAME }}
+        MY_PASSWORD: ${{ secrets.MY_PASSWORD }}    
       run: |
         python your_script.py
       # 如果你的脚本里有敏感信息，建议使用 Secret（见下文）
