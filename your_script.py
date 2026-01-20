@@ -12,7 +12,7 @@ def run_auto_login_and_jump():
     USERNAME = os.environ.get("MY_USERNAME")
 
     PASSWORD = os.environ.get("MY_PASSWORD")
-    if not username or not password:
+    if not USERNAME  or not PASSWORD:
         print("❌ 错误：环境变量 MY_USERNAME 或 MY_PASSWORD 未设置或为空！")
         # 抛出异常，让 GitHub Action 报错，而不是报参数缺失
         raise ValueError("Credentials missing in environment variables")
