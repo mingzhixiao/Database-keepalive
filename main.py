@@ -62,7 +62,7 @@ def run_redis():
     try:
         r = redis.Redis(host=host, port=port,username=username, password=password, decode_responses=True, socket_timeout=5)
         
-        ttl_seconds = 86400 # 1天
+        ttl_seconds = 600 # 1h
 
         # 1. String
         r.set("ka_string", "hello", ex=ttl_seconds)
